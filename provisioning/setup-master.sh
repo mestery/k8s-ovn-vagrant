@@ -40,7 +40,7 @@ sudo /usr/share/openvswitch/scripts/ovn-ctl start_northd
 sudo ovs-vsctl set Open_vSwitch . external_ids:ovn-remote="tcp:$OVERLAY_IP:6642" \
                                   external_ids:ovn-nb="tcp:$OVERLAY_IP:6641" \
                                   external_ids:ovn-encap-ip=$OVERLAY_IP \
-                                  external_ids:ovn-encap-type=“geneve”
+                                  external_ids:ovn-encap-type=geneve
 
 # Re-start OVN controller
 sudo /usr/share/openvswitch/scripts/ovn-ctl stop_controller
