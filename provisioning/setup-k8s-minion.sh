@@ -35,10 +35,12 @@ sudo service docker start
 #popd
 
 # Start k8s daemons
+pushd k8s/server/kubernetes/server/bin
 echo "Starting kubelet ..."
 nohup sudo ./kubelet --api-servers=http://$MASTER_IP:8080 --v=2 --address=0.0.0.0 \
                      --enable-server=true --network-plugin=cni 2>&1 0<&- &>/dev/null &
 sleep 5
+popd
 
 # Restore xtrace
 $XTRACE

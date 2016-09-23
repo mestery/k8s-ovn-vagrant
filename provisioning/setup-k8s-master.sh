@@ -65,6 +65,8 @@ sudo ovn-k8s-watcher --overlay --pidfile --log-file -vfile:info -vconsole:emer -
 sudo ovn-k8s-overlay gateway-init --cluster-ip-subnet="192.168.0.0/16" --physical-interface enp0s9 \
                                   --physical-ip $PUBLIC_IP/$PUBLIC_SUBNET_MASK \
                                   --node-name="kube-gateway-node1" --default-gw $GW_IP
+sleep 5
+popd
 
 # Restore xtrace
 $XTRACE
