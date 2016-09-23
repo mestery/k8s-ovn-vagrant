@@ -19,6 +19,25 @@ Bringup the Vagrant setup
 
 * vagrant up
 
+Create a pod
+------------
+
+Grab a sample [node-js-hello][1] container and try this all out! Follow the
+instructions below, which are loosely based on those found [here][2].
+
+On the master node, run the following:
+
+* cd k8s/server/kubernetes/server/bin
+* ./kubectl run hello-node --image=google/nodejs-hello --port=8080
+* ./kubectl expose deployment hello-node --type="LoadBalancer"
+
+Verify the external IP:
+
+* ./kubectl get services hello-node
+
+[1]: https://hub.docker.com/r/google/nodejs-hello/
+[2]: http://kubernetes.io/docs/hellonode/
+
 References
 ----------
 
