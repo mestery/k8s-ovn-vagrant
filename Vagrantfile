@@ -23,7 +23,7 @@ Vagrant.configure(2) do |config|
     k8smaster.vm.provision "shell", path: "provisioning/setup-master.sh", privileged: false,
       :args => "#{vagrant_config['k8smaster']['overlay-ip']} #{vagrant_config['k8smaster']['public-ip']}"
     k8smaster.vm.provision "shell", path: "provisioning/setup-k8s-master.sh", privileged: false,
-      :args => "#{vagrant_config['k8smaster']['public-ip']} #{vagrant_config['public_gateway']}"
+      :args => "#{vagrant_config['k8smaster']['public-ip']} #{netmask} #{vagrant_config['public_gateway']}"
     k8smaster.vm.provider "virtualbox" do |vb|
        vb.name = vagrant_config['k8smaster']['short_name']
        vb.memory = 2048
