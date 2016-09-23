@@ -4,6 +4,13 @@
 XTRACE=$(set +o | grep xtrace)
 set -o xtrace
 
+# args:
+# $1: The gateway IP to use
+# $2: The default GW for the GW device
+
+PUBLIC_IP=$1
+GW_IP=$2
+
 # First, install docker
 sudo apt-get update
 sudo apt-get install -y apt-transport-https ca-certificates
@@ -51,6 +58,10 @@ sleep 5
 
 echo "Starting ovn-k8s-watcher ..."
 sudo ovn-k8s-watcher --overlay --pidfile --log-file -vfile:info -vconsole:emer --detach
+
+# Setup the GW node on the master
+sudo ovn-k8s-overlay gateway-init --cluster-ip-subnet="192.168.0.0/16" --physical-interface enp0s9 \
+                                  --physical-ip $PUBLIC_IP --node-name="kube-gateway-node1" --default-gw $GW_IP
 
 # Restore xtrace
 $XTRACE
