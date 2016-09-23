@@ -14,7 +14,7 @@ Pull down Kubernetes (it's big)
 * #tar xvzf kubernetes.tar.gz
 * mkdir server
 * cd server
-* tar xvzf ../kubernetes/server/linux/kubernetes-server-linux-amd64.tar.gz
+* tar xvzf ../kubernetes/server/kubernetes-server-linux-amd64.tar.gz
 
 Bringup the Vagrant setup
 
