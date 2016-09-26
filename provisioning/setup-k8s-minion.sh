@@ -34,11 +34,21 @@ sudo service docker start
 #tar xvzf ../kubernetes/server/linux/kubernetes-server-linux-amd64.tar.gz
 #popd
 
+# Install CNI
+pushd ~/
+wget https://github.com/containernetworking/cni/releases/download/v0.2.0/cni-v0.2.0.tgz
+popd
+sudo mkdir -p /opt/cni/bin
+pushd /opt/cni/bin
+sudo tar xvzf ~/cni-v0.2.0.tgz
+popd
+
 # Start k8s daemons
 pushd k8s/server/kubernetes/server/bin
 echo "Starting kubelet ..."
 nohup sudo ./kubelet --api-servers=http://$MASTER_IP:8080 --v=2 --address=0.0.0.0 \
-                     --enable-server=true --network-plugin=cni 2>&1 0<&- &>/dev/null &
+                     --enable-server=true --network-plugin=cni \
+                     --network-plugin-dir=/etc/cni/net.d 2>&1 0<&- &>/dev/null &
 sleep 5
 popd
 
