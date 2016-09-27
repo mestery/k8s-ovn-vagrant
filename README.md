@@ -43,3 +43,6 @@ References
 ----------
 
 https://github.com/openvswitch/ovn-kubernetes
+http://kubernetes.io/docs/hellonode/
+http://kubernetes.io/docs/user-guide/kubectl-cheatsheet/
+https://blog.jetstack.io/blog/k8s-getting-started-part2/
