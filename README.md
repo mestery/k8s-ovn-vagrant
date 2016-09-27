@@ -23,18 +23,40 @@ Bringup the Vagrant setup
 Create a pod
 ------------
 
-Grab a sample [node-js-hello][1] container and try this all out! Follow the
-instructions below, which are loosely based on those found [here][2].
+Create apache.yaml as follows:
 
-On the master node, run the following:
+```
+apiVersion: v1
+kind: Pod
+metadata:
+  name: apache
+  labels:
+    name: apache
+spec:
+  containers:
+  - name: apache
+    image: fedora/apache
+```
 
-* cd k8s/server/kubernetes/server/bin
-* ./kubectl run hello-node --image=google/nodejs-hello --port=8080
-* ./kubectl expose deployment hello-node --type="LoadBalancer"
+Run that as follows:
 
-Verify the external IP:
+* kubectl create -f ~/apache.yaml
 
-* ./kubectl get services hello-node
+Look at this deployment:
+
+* kubectl get pods,svc
+* kubectl describe pod apache
+
+Launch a busybox pod:
+
+* kubectl run -i --tty busybox --image=busybox -- sh
+
+Verify this pod:
+
+* kubectl get pods
+* kubectl describe pod <busybox pod name>
+
+You can now login to the busybox pod on the minion host and ping across pods.
 
 [1]: https://hub.docker.com/r/google/nodejs-hello/
 [2]: http://kubernetes.io/docs/hellonode/
