@@ -7,11 +7,15 @@ set -o xtrace
 # ARGS:
 # $1: IP of second interface of master
 # $2: IP of second interface of minion
-# $2: IP of third interface of master
+# $3: IP of third interface of master
+# $4: Hostname of specific minion
+# $5: Subnet to use
 
 MASTER_OVERLAY_IP=$1
 MINION_OVERLAY_IP=$2
 GW_IP=$3
+MINION_NAME=$4
+MINION_SUBNET=$5
 
 # Install OVS and dependencies
 # FIXME(mestery): Remove once Vagrant boxes allow apt-get to work again
@@ -45,7 +49,7 @@ sudo /usr/share/openvswitch/scripts/ovn-ctl stop_controller
 sudo /usr/share/openvswitch/scripts/ovn-ctl start_controller
 
 # Set k8s API server IP
-sudo ovs-vsctl set Open_vSwitch . external_ids:k8s-api-server="192.168.1.2:8080"
+sudo ovs-vsctl set Open_vSwitch . external_ids:k8s-api-server="$MASTER_OVERLAY_IP:8080"
 
 # Create br-int
 sudo ovs-vsctl add-br --may-exist br-int
@@ -60,8 +64,8 @@ popd
 
 # Initialize the minion
 sudo ovn-k8s-overlay minion-init --cluster-ip-subnet="192.168.0.0/16" \
-                                 --minion-switch-subnet="192.168.2.0/24" \
-                                 --node-name="kube-minion1"
+                                 --minion-switch-subnet="$MINION_SUBNET" \
+                                 --node-name="$MINION_NAME"
 
 # Restore xtrace
 $XTRACE

@@ -21,7 +21,7 @@ Vagrant.configure(2) do |config|
     k8smaster.vm.network "private_network", ip: vagrant_config['k8smaster']['overlay-ip']
     k8smaster.vm.network "private_network", ip: vagrant_config['k8smaster']['public-ip'], netmask: netmask
     k8smaster.vm.provision "shell", path: "provisioning/setup-master.sh", privileged: false,
-      :args => "#{vagrant_config['k8smaster']['overlay-ip']} #{vagrant_config['k8smaster']['public-ip']}"
+      :args => "#{vagrant_config['k8smaster']['overlay-ip']} #{vagrant_config['k8smaster']['public-ip']} #{vagrant_config['k8smaster']['short_name']} #{vagrant_config['k8smaster']['master-switch-subnet']}"
     k8smaster.vm.provision "shell", path: "provisioning/setup-k8s-master.sh", privileged: false,
       :args => "#{vagrant_config['k8smaster']['public-ip']} #{netmask} #{vagrant_config['public_gateway']}"
     k8smaster.vm.provider "virtualbox" do |vb|
@@ -45,7 +45,7 @@ Vagrant.configure(2) do |config|
     k8sminion1.vm.network "private_network", ip: vagrant_config['k8sminion1']['overlay-ip']
     k8sminion1.vm.network "private_network", ip: vagrant_config['k8sminion1']['public-ip'], netmask: netmask
     k8sminion1.vm.provision "shell", path: "provisioning/setup-minion.sh", privileged: false,
-      :args => "#{vagrant_config['k8smaster']['overlay-ip']} #{vagrant_config['k8sminion1']['overlay-ip']} #{vagrant_config['k8smaster']['public-ip']}"
+      :args => "#{vagrant_config['k8smaster']['overlay-ip']} #{vagrant_config['k8sminion1']['overlay-ip']} #{vagrant_config['k8smaster']['public-ip']} #{vagrant_config['k8sminion1']['short_name']} #{vagrant_config['k8sminion1']['minion-switch-subnet']}"
     k8sminion1.vm.provision "shell", path: "provisioning/setup-k8s-minion.sh", privileged: false,
       :args => "#{vagrant_config['k8smaster']['overlay-ip']}"
     k8sminion1.vm.provider "virtualbox" do |vb|
@@ -69,7 +69,7 @@ Vagrant.configure(2) do |config|
     k8sminion2.vm.network "private_network", ip: vagrant_config['k8sminion2']['overlay-ip']
     k8sminion2.vm.network "private_network", ip: vagrant_config['k8sminion2']['public-ip'], netmask: netmask
     k8sminion2.vm.provision "shell", path: "provisioning/setup-minion.sh", privileged: false,
-      :args => "#{vagrant_config['k8smaster']['overlay-ip']} #{vagrant_config['k8sminion2']['overlay-ip']} #{vagrant_config['k8smaster']['public-ip']}"
+      :args => "#{vagrant_config['k8smaster']['overlay-ip']} #{vagrant_config['k8sminion2']['overlay-ip']} #{vagrant_config['k8smaster']['public-ip']} #{vagrant_config['k8sminion2']['short_name']} #{vagrant_config['k8sminion2']['minion-switch-subnet']}"
     k8sminion2.vm.provision "shell", path: "provisioning/setup-k8s-minion.sh", privileged: false,
       :args => "#{vagrant_config['k8smaster']['overlay-ip']}"
     k8sminion2.vm.provider "virtualbox" do |vb|

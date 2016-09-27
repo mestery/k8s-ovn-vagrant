@@ -7,10 +7,13 @@ set -o xtrace
 # ARGS:
 # $1: IP of second interface of master
 # $2: IP of third interface of master
+# $3: Hostname of the master
+# $4: Master switch subnet
 
 OVERLAY_IP=$1
 GW_IP=$2
-echo
+MASTER_NAME=$3
+MASTER_SUBNET=$4
 
 # Install OVS and dependencies
 # FIXME(mestery): Remove once Vagrant boxes allow apt-get to work again
@@ -62,8 +65,8 @@ popd
 
 # Initialize the master
 sudo ovn-k8s-overlay master-init --cluster-ip-subnet="192.168.0.0/16" \
-                                 --master-switch-subnet="192.168.1.0/24" \
-                                 --node-name="kube-master"
+                                 --master-switch-subnet="$MASTER_SUBNET" \
+                                 --node-name="$MASTER_NAME"
 
 # Restore xtrace
 $XTRACE
