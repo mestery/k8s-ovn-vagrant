@@ -32,7 +32,7 @@ popd
 sudo dpkg -i openvswitch-switch_2.6.90-1_amd64.deb openvswitch-common_2.6.90-1_amd64.deb \
              ovn-central_2.6.90-1_amd64.deb ovn-common_2.6.90-1_amd64.deb \
              python-openvswitch_2.6.90-1_all.deb ovn-docker_2.6.90-1_amd64.deb \
-             ovn-host_2.6.90-1_amd64.deb
+             ovn-host_2.6.90-1_amd64.deb openvswitch-datapath-dkms_2.6.90-1_all.deb
 
 # Start the daemons
 sudo /etc/init.d/openvswitch-switch stop
