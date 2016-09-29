@@ -1,3 +1,11 @@
+=======
+WARNING
+=======
+
+THIS IS DEPRECATED.
+
+This has been merged into the [ovn-kubernetes repo][https://github.com/openvswitch/ovn-kubernetes/tree/master/vagrant].
+
 Kubernetes and OVN
 ==================
 
