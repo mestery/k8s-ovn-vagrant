@@ -18,10 +18,19 @@ MASTER_SUBNET=$4
 # Install OVS and dependencies
 # FIXME(mestery): Remove once Vagrant boxes allow apt-get to work again
 sudo rm -rf /var/lib/apt/lists/*
+
 sudo apt-get update
+sudo apt-get install -y apt-transport-https ca-certificates
+sudo apt-key adv --keyserver hkp://p80.pool.sks-keyservers.net:80 --recv-keys 58118E89F3A912897C070ADBF76221572C52609D
+sudo su -c "echo \"deb https://apt.dockerproject.org/repo ubuntu-xenial main\" >> /etc/apt/sources.list.d/docker.list"
+ 
+sudo apt-get update
+sudo apt-get purge lxc-docker
 sudo apt-get install -y graphviz autoconf automake bzip2 debhelper dh-autoreconf \
                         libssl-dev libtool openssl procps python-all \
-                        python-twisted-conch python-zopeinterface python-six
+                        python-twisted-conch python-zopeinterface python-six \
+                        python-pip linux-image-extra-$(uname -r) \
+                        linux-image-extra-virtual docker-engine
 
 git clone https://github.com/openvswitch/ovs.git
 pushd ovs/
@@ -56,7 +65,6 @@ sudo ovs-vsctl set Open_vSwitch . external_ids:k8s-api-server="0.0.0.0:8080"
 sudo ovs-vsctl add-br --may-exist br-int
 
 # Install OVN+K8S Integration
-sudo apt-get install -y python-pip
 sudo -H pip install --upgrade pip
 git clone https://github.com/openvswitch/ovn-kubernetes
 pushd ovn-kubernetes
